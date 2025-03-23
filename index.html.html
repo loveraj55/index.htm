@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List with Notepad</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+            background: #f0f0f0;
+        }
+        #todo-container {
+            max-width: 400px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        input {
+            width: 70%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 8px 12px;
+            cursor: pointer;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+        button:hover {
+            background: #218838;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            background: #ddd;
+            margin: 5px 0;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        li:hover {
+            background: #c0c0c0;
+        }
+        .delete {
+            background: red;
+            color: white;
+            border: none;
+            padding: 5px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .delete:hover {
+            background: darkred;
+        }
+        #notepad {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            max-width: 500px;
+            height: 300px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        #notepad textarea {
+            width: 100%;
+            height: 200px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        #notepad button {
+            margin-top: 10px;
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        #notepad button:hover {
+            background: #0056b3;
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div id="todo-container">
+        <h2>To-Do List</h2>
+        <input type="text" id="task" placeholder="Enter a task">
+        <button onclick="addTask()">Add</button>
+        <ul id="task-list"></ul>
+        <div class="footer">Created By: Loveraj Kingrani</div>
+    </div>
+
+    <div id="notepad">
+        <h3>Task Details</h3>
+        <textarea id="note-content"></textarea>
+        <br>
+        <button onclick="closeNotepad()">Close</button>
+    </div>
+
+    <script>
+        function addTask() {
+            let taskInput = document.getElementById('task');
+            let taskValue = taskInput.value;
+            if (taskValue === '') return;
+            
+            let li = document.createElement('li');
+            li.innerHTML = `<span onclick="openNotepad('${taskValue}')">${taskValue}</span> <button class="delete" onclick="removeTask(this)">X</button>`;
+            document.getElementById('task-list').appendChild(li);
+            
+            taskInput.value = '';
+        }
+
+        function removeTask(button) {
+            button.parentElement.remove();
+        }
+
+        function openNotepad(taskName) {
+            document.getElementById('note-content').value = `Notes for: ${taskName}\n`;
+            document.getElementById('notepad').style.display = 'block';
+        }
+
+        function closeNotepad() {
+            document.getElementById('notepad').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
